@@ -9,24 +9,24 @@ class TestBurger(unittest.TestCase):
 
     @allure.description('Создает экземпляры Bun, Ingredient и Burger, чтобы использовать их в тестах.')
     def setUp(self):
-        self.bun = Bun("Краторная булка N-200i", 1255.5)
-        self.ingredient1 = Ingredient("начинка","Говяжий метеорит", 3000.0)
-        self.ingredient2 = Ingredient("соус","Соус Spicy-X", 90.0)
+        self.bun = Bun("black bun", 100.0)
+        self.ingredient1 = Ingredient('FILLING',"cutlet", 100.0)
+        self.ingredient2 = Ingredient('SAUCE',"sour cream", 200.0)
         self.burger = Burger()
         self.burger.set_buns(self.bun)
 
     @allure.testcase('Тестирование создания булочки')
     @allure.step('Проверка, что булочка была правильно создана.')
     def test_set_buns(self):
-        assert self.burger.bun.get_name()== "Краторная булка N-200i"
-        assert self.burger.bun.get_price()== 1255.5
+        assert self.burger.bun.get_name()== "black bun"
+        assert self.burger.bun.get_price()== 100.0
 
     @allure.testcase('Тестирование добавления ингредиента')
     @allure.step('Проверка, что ингредиент добавляется в бургер.')
     def test_add_ingredient(self):
         self.burger.add_ingredient(self.ingredient1)
         assert len(self.burger.ingredients) == 1
-        assert self.burger.ingredients[0].get_name()== "Говяжий метеорит"
+        assert self.burger.ingredients[0].get_name()== "cutlet"
 
     @allure.testcase('Тестирование удаления ингредиента')
     @allure.step('Проверка, что ингредиент удаляется из бургера.')
@@ -35,7 +35,7 @@ class TestBurger(unittest.TestCase):
         self.burger.add_ingredient(self.ingredient2)
         self.burger.remove_ingredient(0)
         assert len(self.burger.ingredients) == 1
-        assert self.burger.ingredients[0].get_name() == "Соус Spicy-X"
+        assert self.burger.ingredients[0].get_name() == "sour cream"
 
     @allure.testcase('Тестирование перемещения ингредиента')
     @allure.step('Проверка, что ингредиент может быть перемещен в другой индекс.')
@@ -43,7 +43,7 @@ class TestBurger(unittest.TestCase):
         self.burger.add_ingredient(self.ingredient1)
         self.burger.add_ingredient(self.ingredient2)
         self.burger.move_ingredient(0, 1)
-        assert self.burger.ingredients[0].get_name() == "Соус Spicy-X" and self.burger.ingredients[1].get_name()== "Говяжий метеорит"
+        assert self.burger.ingredients[0].get_name() == "sour cream" and self.burger.ingredients[1].get_name()== "cutlet"
 
     @allure.testcase('Тестирование расчета цены бургера')
     @allure.step('Проверка, что цена бургера рассчитывается правильно с учетом булочки и ингредиентов.')

@@ -1,18 +1,17 @@
 import unittest
 import allure
-from praktikum.bun import Bun
 from praktikum.ingredient import Ingredient
-from praktikum.burger import Burger
+
 
 @allure.suite('Тесты ингредиентов')
 class TestIngredient(unittest.TestCase):
     def setUp(self):
-        self.ingredient = Ingredient("начинка","Говяжий метеорит", 3000.0)
+        self.ingredient = Ingredient('FILLING',"dinosaur", 200.0)
 
     @allure.testcase('Тестирование получения цены')
     @allure.step('Проверка цены ингредиента')
     def test_get_price(self):
-        assert self.ingredient.get_price() == 3000.0
+        assert self.ingredient.get_price() == 200.0
 
     @allure.testcase('Тестирование типа цены')
     @allure.step('Проверка типа цены')
@@ -22,7 +21,7 @@ class TestIngredient(unittest.TestCase):
     @allure.testcase('Тестирование получения имени')
     @allure.step('Проверка имени ингредиента')
     def test_get_name(self):
-        assert self.ingredient.get_name() == 'Говяжий метеорит'
+        assert self.ingredient.get_name() == "dinosaur"
 
     @allure.testcase('Тестирование типа имени')
     @allure.step('Проверка типа имени')
@@ -32,7 +31,7 @@ class TestIngredient(unittest.TestCase):
     @allure.testcase('Тестирование получения типа')
     @allure.step('Проверка типа ингредиента')
     def test_get_type(self):
-        assert self.ingredient.get_type() == "начинка"
+        assert self.ingredient.get_type() == 'FILLING'
 
     @allure.testcase('Тестирование типа типа')
     @allure.step('Проверка типа ингредиента')

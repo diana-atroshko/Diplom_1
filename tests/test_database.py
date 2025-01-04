@@ -1,7 +1,6 @@
 import unittest
 import allure
-from praktikum.bun import Bun
-from praktikum.ingredient import Ingredient
+import pytest
 from praktikum.ingredient_types import INGREDIENT_TYPE_SAUCE, INGREDIENT_TYPE_FILLING
 from praktikum.database import Database
 
@@ -11,26 +10,32 @@ class TestDatabase(unittest.TestCase):
     def setUp(self):
         self.database = Database()
 
+    @pytest.mark.parametrize("expected_bun, index", [
+        ("black bun", 0),
+        ("white bun", 1),
+        ("red bun", 2),
+    ])
     @allure.testcase('Тестирование доступных булочек')
     @allure.step('Проверка, что метод available_buns возвращает правильный список булочек.')
-    def test_available_buns(self):
+    def test_available_buns(self, expected_bun, index):
         buns = self.database.available_buns()
         assert len(buns) == 3
-        assert buns[0].get_name() == "black bun"
-        assert buns[1].get_name() == "white bun"
-        assert buns[2].get_name() == "red bun"
+        assert buns[index].get_name() == expected_bun
 
+    @pytest.mark.parametrize("expected_ingredient, index", [
+        ("hot sauce", 0),
+        ("sour cream", 1),
+        ("chili sauce", 2),
+        ("cutlet", 3),
+        ("dinosaur", 4),
+        ("sausage", 5),
+    ])
     @allure.testcase('Тестирование доступных ингредиентов')
     @allure.step('Проверка, что метод available_ingredients возвращает правильный список ингредиентов.')
-    def test_available_ingredients(self):
+    def test_available_ingredients(self, expected_ingredient, index):
         ingredients = self.database.available_ingredients()
         assert len(ingredients) == 6
-        assert ingredients[0].get_name() == "hot sauce"
-        assert ingredients[1].get_name() == "sour cream"
-        assert ingredients[2].get_name() == "chili sauce"
-        assert ingredients[3].get_name() == "cutlet"
-        assert ingredients[4].get_name() == "dinosaur"
-        assert ingredients[5].get_name() == "sausage"
+        assert ingredients[index].get_name() == expected_ingredient
 
     @allure.testcase('Тестирование типов ингредиентов')
     @allure.step('Проверка, что типы ингредиентов соответствуют ожидаемым.')
